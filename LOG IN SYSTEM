@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class LoginSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String validUser = "admin";
+        String validPass = "password123";
+        int attempts = 0;
+        boolean loggedIn = false;
+        
+        System.out.println("=== LOGIN SYSTEM ===");
+        System.out.println("3 attempts allowed\n");
+        
+        while (attempts < 3 && !loggedIn) {
+            attempts++;
+            System.out.println("\nAttempt " + attempts + ":");
+            
+            // Get username
+            System.out.print("Username: ");
+            String user = sc.nextLine();
+            
+            // Get password with masking
+            System.out.print("Password: ");
+            String pass = "";
+            while (true) {
+                char c = (char) System.in.read();
+                if (c == '\n') break;
+                pass += c;
+                System.out.print('*'); // Mask each character
+            }
+            
+            // Check credentials
+            if (user.equals(validUser) && pass.equals(validPass)) {
+                loggedIn = true;
+                System.out.println("\n Login successful!");
+            } else {
+                System.out.println("\n Invalid. " + (3-attempts) + " attempts left.");
+            }
+        }
+        
+        sc.close();
+        if (!loggedIn) System.out.println("\n Account locked.");
+    }
+}
